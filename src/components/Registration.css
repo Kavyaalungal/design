@@ -1,0 +1,329 @@
+.fieldset {
+    width: 750px;
+    height: auto;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  .search{
+    width: 50%;
+  }
+  .select {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .select select 
+  {
+    width: 200px;
+    margin-right: 10px;
+    padding: 5px;
+    height: 40px;
+  }
+  
+  .name {
+    width: 300px;
+  }
+  
+  .button {
+    background-color: #c72121;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .search .button {
+    margin-left: 10px;
+  }
+  
+  .uhid {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    margin-right: 19%;
+    margin-top: 1%;
+  }
+  
+  .uhid .MuiTextField-root {
+    width: 150px;
+  }
+  
+  .input-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-group .MuiTextField-root {
+    margin-right: 10px;
+  }
+  
+  .email {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+  }
+  
+  .email .MuiTextField-root {
+    width: 48%;
+    margin-bottom: 20px;
+  }
+  
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+  .link {
+    text-align: end;
+    margin-top: 20px;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .container .button {
+    width: 200px;
+    height: 50px;
+  }
+  
+  .container .button:hover {
+    background-color: #010503;
+  }
+  
+  .container .button:active {
+    background-color: #8b918e;
+  }
+  
+  .container .button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 170, 109, 0.5);
+  }
+  
+  
+  /* @media (max-width: 768px) {
+    .search {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .uhid {
+      justify-content: flex-start;
+      margin-right: 0;
+    }
+  
+    .select {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .email {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .email .MuiTextField-root {
+      width: 100%;
+    }
+  
+    .link {
+      text-align: center;
+    }
+  
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .container .button {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .fieldset {
+      padding: 10px;
+    }
+  
+    .button {
+      font-size: 12px;
+      padding: 8px 16px;
+    }
+  
+    .container .button {
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+  } */
+  /* Media Queries for responsiveness */
+  
+  /* For screens smaller than 1280px */
+  @media (max-width: 1280px) {
+    .fieldset {
+      width: 80%;
+    }
+  
+    .name {
+      width: 100%;
+    }
+  
+    .email .MuiTextField-root {
+      width: 100%;
+    }
+  }
+  
+  /* For screens smaller than 1000px */
+  @media (max-width: 1000px) {
+    .fieldset {
+      width: 85%;
+    }
+  
+    .search {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .search .button {
+      margin-top: 10px;
+      width: 100%;
+    }
+  
+    .uhid {
+      justify-content: flex-start;
+    }
+  
+    .select {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+  
+    .name {
+      width: 100%;
+    }
+  
+    .email .MuiTextField-root {
+      width: 100%;
+    }
+  
+    .link {
+      text-align: center;
+    }
+  
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .container .button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
+  /* For screens smaller than 750px */
+  @media (max-width: 750px) {
+    .fieldset {
+      width: 90%;
+    }
+  
+    .search {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .search .button {
+      margin-top: 10px;
+      width: 100%;
+    }
+  
+    .uhid {
+      justify-content: flex-start;
+    }
+  
+    .select {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .input-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .input-group {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .email {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .email .MuiTextField-root {
+      width: 100%;
+    }
+  
+    .link {
+      text-align: center;
+    }
+  
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .container .button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
+  /* For screens smaller than 500px */
+  @media (max-width: 500px) {
+    .fieldset {
+      width: 95%;
+      padding: 10px;
+    }
+  
+    .button {
+      font-size: 12px;
+      padding: 8px 16px;
+    }
+  
+    .container .button {
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
+  
+  
+  
