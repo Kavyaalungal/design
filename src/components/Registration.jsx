@@ -1,21 +1,10 @@
 // src/Rwgistration.jsx
 import React, { useState } from 'react';
 import {
-  TextField,
-  FormControl,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  Button,
-  Select,
-  MenuItem,
-  InputLabel,
-  Checkbox,
-  Grid,
-  Typography,
-  Container,
-  Paper
-} from '@mui/material';
+  TextField,FormControl,FormControlLabel,RadioGroup, Radio,Button,Select,MenuItem,InputLabel,Checkbox,Grid,Typography,Container,
+  Paper,FormGroup,Box} from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -40,7 +29,20 @@ const Registration = () => {
     hospitalized: false,
     patientCategory: ''
   });
-
+  const [reportRequestedThrough, setReportRequestedThrough] = useState({
+    personally: false,
+    courier: false,
+    phone: false,
+    email: false,
+    sms: false,
+  });
+  
+  const handleCheckboxChange = (event) => {
+    setReportRequestedThrough({
+      ...reportRequestedThrough,
+      [event.target.name]: event.target.checked,
+    });
+  };
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -56,61 +58,85 @@ const Registration = () => {
 
   return (
     <>
-    <div style={{ backgroundColor: '#f0f0f0', minHeight: '100vh', padding: '20px' }}>
-    <Typography
-    variant="h5"
-    component="h1"
-    gutterBottom
-    sx={{
-    //   backgroundColor: '#f0f0f0',  // Example background color
-      padding: '10px',   
-      marginLeft:'250px'         // Adjust padding as needed
-    }}
-  >
-    Register Patient
-  </Typography>
-  <div
-    style={{
-    //   backgroundColor: '#e0e0e0',  // Example background color
-      padding: '10px',             // Adjust padding as needed
-    }}
-  >
-    <TextField
-      name="search"
-      label="Select Patient by Name, Phone, National ID, Manual Patient ID"
-      variant="outlined"
-      fullWidth
-      value={formData.search}
-      onChange={handleChange}
-      sx={{ mt: 1, mb: 2,ml:33 }} 
-      InputProps={{
-        style: { height: '40px', width: '600px' },
-     
-      }}
-      InputLabelProps={{ style: { fontSize: '14px', marginTop: '-3px' } }} // Adjust margin top and bottom using theme spacing
-    />
-  </div>
+     <div style={{ backgroundColor: '#f0f0f0', minHeight: '100vh', padding: '20px' }}>
+      {/* <Typography
+        variant="h5"
+        component="h1"
+        gutterBottom
+        sx={{
+          padding: '10px',
+          textAlign: 'center', // Center align the text
+        }}
+      >
+        Register Patient
+      </Typography>
+      <div style={{ padding: '10px', textAlign: 'center' }}>
+        <TextField
+          name="search"
+          // label="Select Patient by Name, Phone, National ID, Manual Patient ID"
+          variant="outlined"
+          fullWidth
+          value={formData.search}
+          onChange={handleChange}
+          sx={{ mt: 1, mb: 2, width: '100%', maxWidth: '600px', margin: '0 auto' }} // Center the TextField
+          InputProps={{
+            style: { height: '40px' },
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          InputLabelProps={{ style: { fontSize: '14px', marginTop: '-3px' } }}
+        />
+      </div>
+      <Grid container justifyContent="center">
+        <Grid item xs={12} sm={8} md={6} lg={4}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '20px' }}>
+            <Button variant="contained" color="primary" className="navbar-button">
+              NEW
+            </Button>
+            <Button variant="contained" color="secondary" className="navbar-button">
+              SAVE
+            </Button>
+            <Button variant="contained" color="default" className="navbar-button">
+              EXIT
+            </Button>
+          </Box>
+        </Grid>
+      </Grid> */}
+    
     <Container component="main" maxWidth="md">
       <Paper elevation={3} style={{ padding: '16px', borderRadius: '15px' }}>
       
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit}> */}
           <Grid container spacing={2}>
-          
-            <Grid item xs={12} sm={3}>
+        
+          <Grid item xs={12} sm={6}>
               <TextField
-                name="patientId"
-                label="Patient Id"
+                id="labno"
+                label="Lab No"
                 variant="outlined"
+                size="small"
                 fullWidth
-                value={formData.patientId}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '200px' },
-                 
-                  }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-3px' } }}
+                // value={nationality}
+                onChange={(e) => setNationality(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
               />
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="datetime"
+                label="Date/Time"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+             
             <Grid item xs={12} sm={2}>
   <FormControl fullWidth variant="outlined" sx={{ width: '100%' , height: '100%' }}  >
     <InputLabel  sx={{
@@ -119,345 +145,379 @@ const Registration = () => {
     marginTop: '-3px' // Example color
     // fontWeight: 'bold',          // Example font weight
     // Add any other styles as needed
-  }}>Patient Type</InputLabel>
+  }}>Prefix</InputLabel>
     <Select
-      name="patientType"
-      value={formData.patientType}
-      onChange={handleChange}
-      label="Patient Type"
-      sx={{ width: '100%',height:'75%' }}
-       
-      // Adjust the width of the Select box
-    >
-      <MenuItem value="direct">Direct (D)</MenuItem>
-      <MenuItem value="referred">Referred (R)</MenuItem>
-    </Select>
-  </FormControl>
-</Grid>
-
-            <Grid item xs={12} sm={3}>
-              <TextField
-                name="optionalPatientId"
-                label="Optional Patient ID"
-                variant="outlined"
-                fullWidth
-                value={formData.optionalPatientId}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '200px' },
-                 
-                  }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-3px' } }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                name="nationalIdNumber"
-                label="National ID Number"
-                variant="outlined"
-                fullWidth
-                value={formData.nationalIdNumber}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '275px' },
-                 
-                  }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-3px' } }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={2}>
-  <FormControl fullWidth variant="outlined" sx={{ width: '100%' , height: '100%' }}  >
-    <InputLabel  sx={{
-    fontSize: '0.9rem',
-    color: 'rgba(0, 0, 0, 0.6)', 
-    marginTop: '-3px' // Example color
-    // fontWeight: 'bold',          // Example font weight
-    // Add any other styles as needed
-  }}>Designation</InputLabel>
-    <Select
-      name="Designation"
+      name="prefix"
       value={formData.Designation}
       onChange={handleChange}
-      label="Patient Type"
+      label="Prefix"
       sx={{ width: '100%',height:'75%' }}
        
       // Adjust the width of the Select box
     >
-      <MenuItem value="direct">Direct (D)</MenuItem>
-      <MenuItem value="referred">Referred (R)</MenuItem>
+      <MenuItem value=""><em>None</em></MenuItem>
+                    <MenuItem value="Mr">Mr</MenuItem>
+                    <MenuItem value="Mrs">Mrs</MenuItem>
+                    <MenuItem value="Ms">Ms</MenuItem>
+                    <MenuItem value="Miss">Miss</MenuItem>
     </Select>
   </FormControl>
 </Grid>
-            <Grid item xs={12} sm={10}>
+<Grid item xs={12} sm={10}>
               <TextField
-                name="patientName"
-                label="Patient Name"
+                id="name"
+                label="Name"
                 variant="outlined"
+                size="small"
                 fullWidth
-                required
-                value={formData.patientName}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '680px' },
-                 
-                  }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-3px' } }}
+                // value={nationality}
+                onChange={(e) => setNationality(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
               />
             </Grid>
-  
-  <Grid item xs={12}>
-                <FormControl component="fieldset" sx={{ '& .MuiFormControlLabel-root': { marginRight: '1rem',marginLeft:'1rem' } }}>
-                  <Typography>Gender</Typography>
-                  <RadioGroup
-                    row
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    sx={{ '& .MuiRadio-root': { width: '24px', height: '24px' } }} // Adjust size here
-                  >
-                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                    <FormControlLabel value="other" control={<Radio />} label="Other" />
-                  </RadioGroup>
-                </FormControl>
+        
+            <Grid item xs={12} sm={1}>
+              <Typography
+                variant="body1"
+                gutterBottom
+                sx={{
+                  fontWeight: 'bold',
+                  color: 'rgba(0, 0, 0, 0.7)',
+                  fontSize: '16px',
+                  marginTop: '8px',
+                  textAlign: 'right', // aligns the text to the right
+                }}
+              >
+                Age
+              </Typography>
+            </Grid>
+              <Grid item container xs={12} sm={7} spacing={1}>
+              <Grid item xs={3}>
+              <TextField
+                id="dd"
+                label="Day"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={day}
+                onChange={(e) => setDay(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                id="mm"
+                label="Month"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={month}
+                onChange={(e) => setMonth(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                id="yyyy"
+                label="Year"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={year}
+                onChange={(e) => setYear(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid> <Grid item xs={12} sm={3}>
+                  <FormControl variant="outlined" size="small" fullWidth>
+                    <InputLabel id="genderLabel">Gender</InputLabel>
+                    <Select
+                      labelId="genderLabel"
+                      id="gender"
+                      // value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                      label="Gender"
+                    >
+                      <MenuItem value=""><em>None</em></MenuItem>
+                      <MenuItem value="M">Male</MenuItem>
+                      <MenuItem value="F">Female</MenuItem>
+                      <MenuItem value="O">Other</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
               </Grid>
-
-            <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={4}>
               <TextField
-                name="dob"
+                id="dob"
                 label="Date of Birth"
-                // type="date"
+                type="date"
                 variant="outlined"
+                size="small"
                 fullWidth
-                // InputLabelProps={}
-                value={formData.dob}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '275px' },
-                 
+                // value={dob}
+                onChange={(e) => {
+                  setDob(e.target.value);
+                  calculateAge(e.target.value);
+                }}
+                InputLabelProps={{ shrink: true, style: { fontSize: '14px' } }}
+              />
+            </Grid>
+
+        
+<Grid item xs={12} sm={4}>
+                <TextField
+                  id="phone1"
+                  label="Phone1"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  // value={phone1}
+                  onChange={(e) => {
+                    setPhone1(e.target.value)
+                    setIsPhone1Valid(true)
                   }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-2px'  ,} }}
+                  InputLabelProps={{ style: { fontSize: '14px' } }}
+                  // error={!isPhone1Valid} // Apply error style if email is invalid
+                  // helperText={!isPhone1Valid ? "Invalid Phone number" : ""}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+              <TextField
+                id="phone2"
+                label="Phone2"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={phone2}
+                onChange={(e) => {
+                  setPhone2(e.target.value)
+                  setIsPhone2Valid(true)
+                }}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+                // error={!isPhone2Valid} 
+                // helperText={!isPhone2Valid ? "Invalid Phone number" : ""}
               />
             </Grid>
             <Grid item xs={12} sm={4}>
               <TextField
-                name="age"
-                label="Age"
-                variant="outlined"
-                fullWidth
-                value={formData.age}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '275px' },
-                 
-                  }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-2px'  , shrink: true} }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                name="phoneNumber"
-                label="Contact Number"
-                variant="outlined"
-                fullWidth
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '275px' },
-                 
-                  }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-2px'  , shrink: true} }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={formData.sendWhatsapp}
-                    onChange={handleChange}
-                    name="sendWhatsapp"
-                  />
-                }
-                label="Send WhatsApp message to patient"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name="email"
+                id="email"
                 label="Email"
                 variant="outlined"
+                size="small"
                 fullWidth
-                value={formData.email}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '800px' },
-                 
-                  }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-2px'  , shrink: true} }}
+                // value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setIsEmailValid(true); // Reset email validation on change
+                }}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+                // error={!isEmailValid} // Apply error style if email is invalid
+                // helperText={!isEmailValid ? "Invalid email address" : ""} // Display error message
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
-                name="organization"
-                label="Organization"
+                id="nationality"
+                label="Nationality"
                 variant="outlined"
+                size="small"
                 fullWidth
-                value={formData.organization}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '800px' },
-                 
-                  }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-2px'  , shrink: true} }}
+                // value={nationality}
+                onChange={(e) => setNationality(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
-                name="address"
+                id="address"
                 label="Address"
                 variant="outlined"
-                multiline
-                rows={4}
+                size="small"
                 fullWidth
-                value={formData.address}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '800px' },
-                 
-                  }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-2px'  , shrink: true} }}
+                // value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <Typography>Covid Vaccine Received</Typography>
-                <RadioGroup
-                  row
-                  name="covidVaccineReceived"
-                  value={formData.covidVaccineReceived}
-                  onChange={handleChange}
-                >
-                  <FormControlLabel value={true} control={<Radio />} label="Yes" />
-                  <FormControlLabel value={false} control={<Radio />} label="No" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth variant="outlined" sx={{ width: '100%' , height: '100%' }}>
-              <InputLabel  sx={{
-    fontSize: '0.9rem',
-    color: 'rgba(0, 0, 0, 0.6)', 
-    marginTop: '-3px' // Example color
-    // fontWeight: 'bold',          // Example font weight
-    // Add any other styles as needed
-  }}>Typ of Vaccine</InputLabel>
-                <Select
-                  name="typeOfVaccine"
-                  value={formData.typeOfVaccine}
-                  onChange={handleChange}
-                  label="Type of Vaccine"
-                  sx={{ width: '100%',height:'75%' }}
-                >
-                  <MenuItem value="covaxin">Covaxin</MenuItem>
-                  <MenuItem value="covishield">Covishield</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                name="vaccinationDate"
-                // label="Vaccination Date"
-                type="date"
-                variant="outlined"
-                fullWidth
-                // InputLabelProps={{ shrink: true }}
-                value={formData.vaccinationDate}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '275px' },
-                 
+                <TextField
+                  id="phone1"
+                  label="Phone1"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  // value={phone1}
+                  onChange={(e) => {
+                    setPhone1(e.target.value)
+                    setIsPhone1Valid(true)
                   }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-15px'  , shrink: true} }}
+                  InputLabelProps={{ style: { fontSize: '14px' } }}
+                  // error={!isPhone1Valid} // Apply error style if email is invalid
+                  // helperText={!isPhone1Valid ? "Invalid Phone number" : ""}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <TextField
+                id="phone2"
+                label="Phone2"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={phone2}
+                onChange={(e) => {
+                  setPhone2(e.target.value)
+                  setIsPhone2Valid(true)
+                }}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+                // error={!isPhone2Valid} 
+                // helperText={!isPhone2Valid ? "Invalid Phone number" : ""}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                name="dateOfVaccineDose2"
-                // label="Date of Vaccine Dose 2"
-                type="date"
+                id="email"
+                label="Email"
                 variant="outlined"
+                size="small"
                 fullWidth
-                // InputLabelProps={{ shrink: true }}
-                value={formData.dateOfVaccineDose2}
-                onChange={handleChange}
-                InputProps={{
-                    style: { height: '40px', width: '275px' },
-                 
-                  }}
-                  InputLabelProps={{ style: { fontSize: '14px', marginTop: '-12px'  , shrink: true} }}
+                // value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setIsEmailValid(true); // Reset email validation on change
+                }}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+                // error={!isEmailValid} // Apply error style if email is invalid
+                // helperText={!isEmailValid ? "Invalid email address" : ""} // Display error message
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <Typography>Have you Installed Arogya Setu App</Typography>
-                <RadioGroup
-                  row
-                  name="arogyaSetuInstalled"
-                  value={formData.arogyaSetuInstalled}
-                  onChange={handleChange}
-                >
-                  <FormControlLabel value={true} control={<Radio />} label="Yes" />
-                  <FormControlLabel value={false} control={<Radio />} label="No" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <Typography>Is Patient Hospitalized?</Typography>
-                <RadioGroup
-                  row
-                  name="hospitalized"
-                  value={formData.hospitalized}
-                  onChange={handleChange}
-                >
-                  <FormControlLabel value={true} control={<Radio />} label="Yes" />
-                  <FormControlLabel value={false} control={<Radio />} label="No" />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth variant="outlined" sx={{ width: '100%' , height: '100%' }}>
-              <InputLabel  sx={{
-    fontSize: '0.9rem',
-    color: 'rgba(0, 0, 0, 0.6)', 
-    marginTop: '-3px' // Example color
-    // fontWeight: 'bold',          // Example font weight
-    // Add any other styles as needed
-  }}>Patient Label</InputLabel>
-                <Select
-                  name="patientCategory"
-                  value={formData.patientCategory}
-                  onChange={handleChange}
-                  label="Patient Category"
-                  sx={{ width: '100%',height:'75%' }}
-                >
-                  <MenuItem value="category1">Category 1</MenuItem>
-                  <MenuItem value="category2">Category 2</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="nationality"
+                label="Nationality"
+                variant="outlined"
+                size="small"
                 fullWidth
-              >
-                Submit
-              </Button>
+                // value={nationality}
+                onChange={(e) => setNationality(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="address"
+                label="Address"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="address"
+                label="Address"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="address"
+                label="Address"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="address"
+                label="Address"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="address"
+                label="Address"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="address"
+                label="Address"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+        
+            <Grid item xs={12}>
+      <FormControl component="fieldset">
+        <Typography variant="body1" gutterBottom>Report Requested Through</Typography>
+        <FormGroup row>
+          <FormControlLabel
+             control={<Checkbox checked={reportRequestedThrough.personally} onChange={handleCheckboxChange} name="personally" />}
+            label="Personally"
+          />
+           <FormControlLabel
+             control={<Checkbox checked={reportRequestedThrough.courier} onChange={handleCheckboxChange} name="courier" />}
+            label="Courier"
+          />
+          <FormControlLabel
+             control={<Checkbox checked={reportRequestedThrough.phone} onChange={handleCheckboxChange} name="phone" />}
+            label="phone"
+          />
+         
+          <FormControlLabel
+             control={<Checkbox checked={reportRequestedThrough.email} onChange={handleCheckboxChange} name="email" />}
+            label="Email"
+          />
+          <FormControlLabel
+            control={<Checkbox checked={reportRequestedThrough.sms} onChange={handleCheckboxChange} name="sms" />}
+            label="SMS"
+          />
+         
+        </FormGroup>
+      </FormControl>
+      
+    </Grid>
+    <Grid item xs={12} sm={12}>
+              <TextField
+                id="notes"
+                label="Notes"
+                variant="outlined"
+                size="small"
+                fullWidth
+                // value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
             </Grid>
           </Grid>
-        </form>
+        {/* </form> */}
       </Paper>
     </Container>
     </div>
