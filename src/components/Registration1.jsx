@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
-const Registration = () => {
+const Registration1 = () => {
   const [labNo, setLabNo] = useState('');
   const [invNo, setInvNo] = useState('');
   const [branchId, setBranchId] = useState('');
@@ -47,7 +47,6 @@ const Registration = () => {
     sms: false,
     
   });
-  const [invDateTime, setInvDateTime] = useState('');
   const [report, setReport] = useState({ urgentwork: false });
   const [notes, setNotes] = useState('');
   const [invoiceData, setInvoiceData] = useState(null);
@@ -193,8 +192,8 @@ useEffect(() => {
       const response = await axios.get(`http://172.16.16.10:8082/api/EditInvoice`, {
         params: {
           LabNo: labNo,
-          YearId: 2425,
-          BranchId: 2,
+          YearId: yearId,
+          BranchId: branchId,
         },
       });
       const invoiceData = response.data.invoiceDtls;
@@ -336,46 +335,7 @@ useEffect(() => {
       setInvSmplDate(initialTime + ':00.000z') // Ensure format HH:mm:ss.SSSZ
     }
   }, [invoiceData]);
-  const convertAMPMTo24Hour = (time) => {
-    let [hour, minutePeriod] = time.split(':');
-    const minute = minutePeriod.slice(0, 2);
-    const period = minutePeriod.slice(3).toUpperCase();
   
-    hour = parseInt(hour, 10);
-    if (period === 'PM' && hour < 12) {
-      hour += 12;
-    } else if (period === 'AM' && hour === 12) {
-      hour = 0;
-    }
-  
-    return `${hour.toString().padStart(2, '0')}:${minute}`;
-  };
-  
-  // Utility function to format date and time for input field
-  const formatDateTimeForInput = (date, time) => {
-    return `${date}T${time}`;
-  };
-  useEffect(() => {
-    if (invoiceData) {
-      // Convert the fetched time to 24-hour format if it is in AM/PM
-      const time24Hour = convertAMPMTo24Hour(invoiceData.Inv_time);
-      const formattedDateTime = formatDateTimeForInput(invoiceData.Inv_Date.slice(0, 10), time24Hour);
-      setInvDateTime(formattedDateTime);
-    }
-  }, [invoiceData]);
-  
-  const handleDateTimeChange = (e) => {
-    const datetimeValue = e.target.value;
-    setInvDateTime(datetimeValue); // Update state with new datetime value
-  };
-
-  const formatTimeToAMPM = (time) => {
-    let [hour, minute] = time.split(':').map(Number);
-    const period = hour >= 12 ? 'PM' : 'AM';
-    if (hour > 12) hour -= 12;
-    if (hour === 0) hour = 12;
-    return `${hour}:${minute.toString().padStart(2, '0')} ${period}`;
-  };
 
 
 // saving data back to server
@@ -446,9 +406,7 @@ const saveDataToAPI = () => {
     Inv_RepThrPhone: reportRequestedThrough.phone,
     Inv_RepThrEmail: reportRequestedThrough.email,
     Inv_RepThrSms: reportRequestedThrough.sms,
-    Inv_Comment:notes,
-    Inv_Date: invDateTime.slice(0, 10), // Extract date part
-    Inv_time: formatTimeToAMPM(invDateTime.slice(11, 16)),  // Extract time part in HH:mm format
+    Inv_Comment:notes,Inv_Date: invDate,Inv_time: invTime,
   };
   console.log('Payload to be sent to API:', payload);
 
@@ -708,7 +666,7 @@ const handleNewButtonClick = () => {
           InputLabelProps={{ style: { fontSize: '14px', marginTop: '-3px' } }}
         />
       </div> */}
-      <Grid container justifyContent="center">
+      {/* <Grid container justifyContent="center">
         <Grid item xs={12} sm={8} md={6} lg={4}>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '20px' }}>
             <Button variant="contained" color="primary" className="navbar-button" onClick={handleNewButtonClick}>
@@ -722,13 +680,13 @@ const handleNewButtonClick = () => {
             </Button>
           </Box>
         </Grid>
-      </Grid>
+      </Grid> */}
     
     <Container component="main" maxWidth="md" >
       <Paper elevation={3} style={{ padding: '16px', borderRadius: '15px' }}>
       
         {/* <form onSubmit={handleSubmit}> */}
-        <Grid container spacing={2}>
+        {/* <Grid container spacing={2}>
           
         <Grid item xs={12} sm={6}>
               <TextField
@@ -740,11 +698,10 @@ const handleNewButtonClick = () => {
                 value={labNo}
                 onChange={(e) => setLabNo(e.target.value)}
                 InputLabelProps={{ style: { fontSize: '14px' } }}
-                style={{ marginBottom: '10px' }}
               />
             </Grid>
             
-          {/* <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6}>
           <TextField
           id="branchId"
                 label="Branch Id"
@@ -769,17 +726,17 @@ const handleNewButtonClick = () => {
                 InputLabelProps={{ style: { fontSize: '14px' } }}
                 style={{ marginBottom: '20px' }}
               />
-            </Grid> */}
+            </Grid>
             <Grid item xs={12} sm={6}>
               <Button variant="contained" color="primary" onClick={fetchData}>
                 Search
               </Button>
             </Grid>
-        </Grid>
+        </Grid> */}
           <Grid container spacing={2}>
           {error && <Typography variant="body2" color="error">{error}</Typography>}
-          {invoiceData && (
-             <>
+         
+        
           <Grid item xs={12} sm={6}>
               <TextField
                 id="labno"
@@ -790,23 +747,40 @@ const handleNewButtonClick = () => {
                 value={labNo}
                 onChange={(e) => setLabNo(e.target.value)}
                 InputLabelProps={{ style: { fontSize: '14px' } }}
-                 style={{ marginTop: '10px' }}
+                // style={{ marginTop: '10px' }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
             <TextField
-      id="invDateTime"
-      label="Date"
-      variant="outlined"
-      size="small"
-      fullWidth
-      type="datetime-local"
-      value={invDateTime}
-      onChange={handleDateTimeChange}
-      InputLabelProps={{ shrink: true }}
-      style={{ marginTop: '10px' }}
-    />
-     </Grid>
+                id="dateTime"
+                label="Date/Time"
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={`${invDate} ${invTime}`}
+                onChange={(e) => {
+                  const value = e.target.value.trim(); // Trim any leading or trailing spaces
+                  console.log('Value before split:', value);
+                  
+                  // Split by space or comma followed by space
+                  const [date, time] = value.split(/\s*,\s*|\s+/);
+                  
+                  // Check if both date and time parts exist
+                  if (date && time) {
+                    console.log('Date:', date, 'Time:', time);
+                    setInvDate(date);
+                    setInvTime(time);
+                  } else {
+                    // Handle invalid input or missing parts
+                    console.log('Invalid DateTime format');
+                    // Optionally, you can set defaults or show an error message to the user
+                  }
+                }}
+                
+                InputLabelProps={{ style: { fontSize: '14px' } }}
+              />
+            </Grid>
+             
             <Grid item xs={12} sm={2}>
   <FormControl fullWidth variant="outlined" sx={{ width: '100%' , height: '100%' }}  >
     <InputLabel  sx={{
@@ -1242,16 +1216,15 @@ const handleNewButtonClick = () => {
                 InputLabelProps={{ style: { fontSize: '14px' } }}
               />
             </Grid>
-            </>
-          )}
+        
           </Grid>
         {/* </form> */}
       </Paper>
     </Container>
-     <ToastContainer />
+    <ToastContainer />
     </div>
     </>
   );
 };
 
-export default Registration;
+export default Registration1;
