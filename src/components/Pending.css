@@ -1,0 +1,76 @@
+.pending-collection {
+    padding: 20px;
+    margin-left: 80px; /* Adjust width based on sidebar width */
+    display: flex;
+    justify-content: space-between; /* Ensure containers are side by side */
+}
+
+.form-container {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 5px;
+    width: 45%; /* Adjust width as needed */
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+.form {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center align items vertically */
+    margin-bottom: 10px;
+}
+
+.form-row label {
+    margin-right: 10px;
+    width: 100px;
+}
+
+.form-row input, .form-row select {
+    flex: 1;
+    margin-right: 10px;
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px; /* Adjust spacing */
+}
+
+.buttons button {
+    margin-left: 10px;
+    padding: 5px 10px;
+}
+
+.table-container {
+    width: 50%; /* Adjust width as needed */
+    overflow-x: auto; /* Add horizontal scrollbar if table overflows */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #003366;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #ddd;
+}

@@ -1,13 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import Registration from './components/Registration'
+
 import Invoice from './components/Invoice'
 import { BrowserRouter as Router, Route,Routes } from 'react-router-dom';
 // import './App.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import MainComponent from './components/MainComponent'
-import Registration1 from './components/Registration1'
+import Editinvoice from './components/Editinvoice'
+import Pending from './components/Pending'
+// import Header from './components/Header';
 // import MainComponent from './components/MainComponent'
 
 
@@ -29,21 +27,19 @@ function App() {
 
   return (
     <>
+  
     <div className="app-container">
-       <ThemeProvider theme={theme}>
-        <Registration/>
-      </ThemeProvider>
-    </div>
-    {/* <div className="app-container">
       <ThemeProvider theme={theme}>
         <Router>
+          {/* <Header/> */}
           <Routes>
-            <Route path="/" element={<MainComponent />} />
-            <Route path="/edit" element={<Registration />} />
+            <Route path="/" element={<Invoice />} />
+            <Route path="/edit" element={<Editinvoice />} />
+            <Route path="/pending" element={<Pending />} />
           </Routes>
         </Router>
       </ThemeProvider>
-    </div> */}
+    </div>
     </>
   )
 }
