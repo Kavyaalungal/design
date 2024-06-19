@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route,Routes } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Editinvoice from './components/Editinvoice'
 import Pending from './components/Pending'
+import PendingCollections from './components/PendingCollections';
 // import Header from './components/Header';
 // import MainComponent from './components/MainComponent'
 
@@ -36,6 +37,7 @@ function App() {
             <Route path="/" element={<Invoice />} />
             <Route path="/edit" element={<Editinvoice />} />
             <Route path="/pending" element={<Pending />} />
+            <Route path='/pending' element={<PendingCollections/>}/>
           </Routes>
         </Router>
       </ThemeProvider>

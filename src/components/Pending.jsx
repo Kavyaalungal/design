@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Container,Grid,Paper,TextField,Typography,FormControl,InputLabel,Select,MenuItem,Button,TableContainer,
-    Table,TableHead, TableBody, TableRow, TableCell,Box} from '@mui/material';
+    Table,TableHead, TableBody, TableRow, TableCell,Box,
+    FormGroup,
+    FormControlLabel,Checkbox} from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Pending = () => {
   const [error, setError] = useState('');
-
+  const [report, setReport] = useState({ urgentwork: false });
   // Sample data for the table
   const rows = [
     { id: 1, col1: 'Data 1', col2: 'Data 2', col3: 'Data 3', col4: 'Data 4', col5: 'Data 5', col6: 'Data 6', col7: 'Data 7', col8: 'Data 8' },
@@ -184,16 +186,17 @@ const Pending = () => {
                     InputLabelProps={{ style: { fontSize: '14px' } }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="email"
-                    label="Email"
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
-                  />
-                </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                id='email'
+                label='Email'
+                variant='outlined'
+                size='small'
+                fullWidth
+                InputLabelProps={{style: {fontSize: '14px'}}}
+                />
+              </Grid>
+                
                 <Grid item xs={12} sm={6}>
                   <TextField
                     id="paymode"
@@ -266,8 +269,8 @@ const Pending = () => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <TextField
-                    id="remarks"
-                    label="Remarks"
+                    id="notes"
+                    label="Notes"
                     variant="outlined"
                     size="small"
                     fullWidth
@@ -276,16 +279,7 @@ const Pending = () => {
                     InputLabelProps={{ style: { fontSize: '14px' } }}
                   />
                 </Grid>
-                {/* <Grid item xs={12} sm={12}>
-                  <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
-                    <Button variant="contained" color="primary" size="small" style={{ marginRight: '8px' }}>
-                      Submit
-                    </Button>
-                    <Button variant="contained" color="default" size="small">
-                      Reset
-                    </Button>
-                  </Box>
-                </Grid> */}
+            
               </Grid>
             </Paper>
           </Grid>
@@ -296,14 +290,14 @@ const Pending = () => {
               {/* Date fields and buttons */}
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={12} sm={4}>
-                  <TextField
-                    id="dateFrom"
-                    label="From"
-                    variant="outlined"
-                    size="small"
+                    <TextField 
+                    id='dateFrom'
+                    label='From'
+                    variant='outlined'
+                    size='small'
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
-                  />
+                    InputLabelProps={{style:{ fontSize: '14px'}}}
+                    />
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <TextField
@@ -317,13 +311,25 @@ const Pending = () => {
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <Button variant="contained" color="primary" size="small" style={{ marginRight: '8px' }}>
-                    Search
+                    REFRESH
                   </Button>
                   <Button variant="contained" color="default" size="small">
-                    Clear
+                    PRINT
                   </Button>
                 </Grid>
-
+   
+                <Grid item xs={12}>
+              <FormControl component="fieldset" fullWidth>
+                <FormGroup row>
+                 <FormControlLabel
+                  label="coroperate"
+                  labelPlacement='start'
+                    control={<Checkbox checked={report.urgentwork}  name="coroperate" />}
+                   
+                  />
+                </FormGroup>
+              </FormControl>
+            </Grid> 
                 {/* Table */}
                 <Grid item xs={12}>
                   <TableContainer style={{ maxHeight: 'calc(100vh - 400px)', overflowY: 'auto' }}>
