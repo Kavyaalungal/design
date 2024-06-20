@@ -1,54 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container,Grid,Paper,TextField,Typography,FormControl,InputLabel,Select,MenuItem,Button,TableContainer,
-    Table,TableHead, TableBody, TableRow, TableCell,Box,
-    FormGroup,
-    FormControlLabel,Checkbox} from '@mui/material';
+Table,TableHead, TableBody, TableRow, TableCell,Box,FormGroup,FormControlLabel,Checkbox} from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Pending = () => {
   const [error, setError] = useState('');
-  const [report, setReport] = useState({ urgentwork: false });
+  const [isChecked, setIsChecked] = useState(false);
+  const [prefix,setPrefix] = useState('');
+  const [gender,setGender] = useState('');
+
+
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+  };
+
+  useEffect(() => {
+    const prefixToGender = { Mr: 'M',Mrs: 'F',Ms: 'F', Miss: 'F',};
+
+    setGender(prefixToGender[prefix] || '');
+  }, [prefix]);
   // Sample data for the table
   const rows = [
     { id: 1, col1: 'Data 1', col2: 'Data 2', col3: 'Data 3', col4: 'Data 4', col5: 'Data 5', col6: 'Data 6', col7: 'Data 7', col8: 'Data 8' },
-    { id: 2, col1: 'Data 1', col2: 'Data 2', col3: 'Data 3', col4: 'Data 4', col5: 'Data 5', col6: 'Data 6', col7: 'Data 7', col8: 'Data 8' },
-    { id: 3, col1: 'Data 1', col2: 'Data 2', col3: 'Data 3', col4: 'Data 4', col5: 'Data 5', col6: 'Data 6', col7: 'Data 7', col8: 'Data 8' },
-    { id: 4, col1: 'Data 1', col2: 'Data 2', col3: 'Data 3', col4: 'Data 4', col5: 'Data 5', col6: 'Data 6', col7: 'Data 7', col8: 'Data 8' }
+    { id: 2, col1: 'Data 9', col2: 'Data 10', col3: 'Data 11', col4: 'Data 12', col5: 'Data 13', col6: 'Data 14', col7: 'Data 15', col8: 'Data 16' },
+    { id: 3, col1: 'Data 17', col2: 'Data 18', col3: 'Data 19', col4: 'Data 20', col5: 'Data 21', col6: 'Data 22', col7: 'Data 23', col8: 'Data 24' },
+    { id: 4, col1: 'Data 25', col2: 'Data 26', col3: 'Data 27', col4: 'Data 28', col5: 'Data 29', col6: 'Data 30', col7: 'Data 31', col8: 'Data 32' }
   ];
 
   return (
     <div style={{ backgroundColor: '#f0f0f0', minHeight: '100vh', padding: '20px' }}>
       <Container maxWidth="lg">
-      <Grid container alignItems="center" style={{ marginBottom: '20px' }}>
-  <Grid item xs={12} sm={3}>
-  <Typography 
-      variant="h6" 
-      sx={{ 
-        margin: 0, 
-        fontSize: '24px', 
-        fontWeight: 'bold', 
-        color: '#333' 
-      }}
-    >PENDING COLLECTION</Typography>
-  </Grid>
-  <Grid item xs={12} sm={9} md={6} lg={4} container>
-    <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
-      <Button variant="contained" color="primary" className="navbar-button">
-        PRINT
-      </Button>
-      <Button variant="contained" color="secondary" className="navbar-button">
-        SAVE
-      </Button>
-      <Button variant="contained" color="default" className="navbar-button">
-        EXIT
-      </Button>
-    </Box>
-  </Grid>
-</Grid>
-
-
-        {/* Form and Table */}
+      <Grid container alignItems="center" spacing={2} style={{ marginBottom: '20px' }}>
+       <Grid item xs={12} sm={6}>
+        <Typography 
+         variant="h6" 
+         sx={{ 
+         margin: 0, 
+         fontSize: '24px', 
+         fontWeight: 'bold', 
+         color: '#333' 
+       }}
+      >PENDING COLLECTION</Typography>
+     </Grid>
+     <Grid item xs={12} sm={6}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '16px', flexWrap: 'wrap' }}>
+              <Button variant="contained" color="primary" className="navbar-button">
+                PRINT
+              </Button>
+              <Button variant="contained" color="secondary" className="navbar-button">
+                SAVE
+              </Button>
+              <Button variant="contained" color="default" className="navbar-button">
+                EXIT
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+       {/* Form and Table */}
         <Grid container spacing={2}>
           {/* Left side - Form */}
           <Grid item xs={12} sm={6}>
@@ -69,7 +78,8 @@ const Pending = () => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
+
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -79,32 +89,33 @@ const Pending = () => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={3}>
-  <FormControl fullWidth variant="outlined" sx={{ width: '100%' , height: '100%' }}  >
-    <InputLabel  sx={{
-    fontSize: '0.9rem',
-    color: 'rgba(0, 0, 0, 0.6)', 
-    marginTop: '-3px' 
+                  <FormControl fullWidth variant="outlined" sx={{ width: '100%' , height: '100%' }}  >
+                    <InputLabel  sx={{
+                     fontSize: '1.2rem',
+                     color: 'rgba(0, 0, 0, 0.6)', 
+                     marginTop: '-6px' 
   
-  }}>Prefix</InputLabel>
-    <Select
-      name="prefix"
-    //   value={prefix}
-    //   onChange={(e) => setPrefix(e.target.value)}
-      label="Prefix"
-      sx={{ width: '100%',height:'75%' }}
-        >
-       <MenuItem value=""><em>None</em></MenuItem>
+                       }}>Prefix</InputLabel>
+                   <Select
+                   name="prefix"
+                    value={prefix}
+                 onChange={(e) => setPrefix(e.target.value)}
+                  label="Prefix"
+                  sx={{ width: '100%',height:'75%' }}
+     
+                   >
+                 <MenuItem value=""><em>None</em></MenuItem>
                     <MenuItem value="Mr">Mr</MenuItem>
                     <MenuItem value="Mrs">Mrs</MenuItem>
                     <MenuItem value="Ms">Ms</MenuItem>
                     <MenuItem value="Miss">Miss</MenuItem>
-    </Select>
-  </FormControl>
-</Grid>
+                </Select>
+              </FormControl>
+              </Grid>
                 <Grid item xs={12} sm={9}>
                   <TextField
                     id="name"
@@ -112,70 +123,67 @@ const Pending = () => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
+                
                 <Grid item xs={12} sm={1}>
-                  <Typography variant="body1" gutterBottom sx={{ fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.7)', fontSize: '16px', marginTop: '8px', textAlign: 'right' }}>
+                  <Typography variant="body1" gutterBottom sx={{ fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.7)', fontSize: '16px', marginTop: '8px', textAlign: 'left' }}>
                     Age
                   </Typography>
                 </Grid>
-                <Grid item container xs={12} sm={7} spacing={1}>
-                  <Grid item xs={3}>
+                {/* <Grid item container xs={12} sm={7} spacing={1}> */}
+                  <Grid item xs={2}>
                     <TextField
                       id="dd"
                       label="Day"
                       variant="outlined"
                       size="small"
                       fullWidth
-                      InputLabelProps={{ style: { fontSize: '14px' } }}
+                      InputLabelProps={{ style: { fontSize: '18px' } }}
                
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={2}>
                     <TextField
                       id="mm"
                       label="Month"
                       variant="outlined"
                       size="small"
                       fullWidth
-                      InputLabelProps={{ style: { fontSize: '14px' } }}
+                      InputLabelProps={{ style: { fontSize: '18px' } }}
                     />
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={2}>
                     <TextField
                       id="yyyy"
                       label="Year"
                       variant="outlined"
                       size="small"
                       fullWidth
-                      InputLabelProps={{ style: { fontSize: '14px' } }}
+                      InputLabelProps={{ style: { fontSize: '18px' } }}
                     />
                   </Grid>
-                </Grid>
+                {/* </Grid> */}
                 <Grid item xs={12} sm={3}>
-  <FormControl fullWidth variant="outlined" sx={{ width: '100%' , height: '100%' }}  >
-    <InputLabel  sx={{
-    fontSize: '0.9rem',
-    color: 'rgba(0, 0, 0, 0.6)', 
-    marginTop: '-3px'
-  }}>Prefix</InputLabel>
-    <Select
-      name="prefix"
-    //   value={prefix}
-    //   onChange={(e) => setPrefix(e.target.value)}
-      label="Prefix"
-      sx={{ width: '100%',height:'75%' }}
+                <FormControl fullWidth variant="outlined" sx={{ width: '100%' , height: '100%' }}  >
+                <InputLabel  sx={{fontSize: '1.2rem',color: 'rgba(0, 0, 0, 0.6)',  marginTop: '-6px' }}>Prefix</InputLabel>
+                <Select
+                name="prefix"
+               value={gender}
+              onChange={(e) => setGender(e.target.value)}
+                label="Prefix"
+                sx={{ width: '100%',height:'75%' }}
        
-      // Adjust the width of the Select box
-    >
-       <MenuItem value=""><em>None</em></MenuItem>
+            
+                >
+                 <MenuItem value=""><em>None</em></MenuItem>
                       <MenuItem value="M">Male</MenuItem>
                       <MenuItem value="F">Female</MenuItem>
                       <MenuItem value="O">Other</MenuItem>
-    </Select>
-  </FormControl>
-</Grid>
+            </Select>
+            </FormControl>
+            </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     id="phone1"
@@ -183,7 +191,7 @@ const Pending = () => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
               <Grid item xs={12} sm={6}>
@@ -193,7 +201,7 @@ const Pending = () => {
                 variant='outlined'
                 size='small'
                 fullWidth
-                InputLabelProps={{style: {fontSize: '14px'}}}
+                InputLabelProps={{style: {fontSize: '18px'}}}
                 />
               </Grid>
                 
@@ -204,7 +212,7 @@ const Pending = () => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -214,7 +222,7 @@ const Pending = () => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
@@ -224,7 +232,7 @@ const Pending = () => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -234,37 +242,37 @@ const Pending = () => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="currbalance"
-                    label="Curr.Balance"
+                    id="curbalance"
+                    label="Cur.Balance"
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="collamount"
-                    label="Coll.Amount"
+                    id="colamount"
+                    label="Col.Amount"
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    id="colldatetime"
-                    label="Coll.DateTime"
+                    id="coldatetime"
+                    label="Col.DateTime"
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
@@ -276,7 +284,7 @@ const Pending = () => {
                     fullWidth
                     multiline
                     rows={2}
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
             
@@ -296,7 +304,7 @@ const Pending = () => {
                     variant='outlined'
                     size='small'
                     fullWidth
-                    InputLabelProps={{style:{ fontSize: '14px'}}}
+                    InputLabelProps={{style:{ fontSize: '18px'}}}
                     />
                 </Grid>
                 <Grid item xs={12} sm={4}>
@@ -306,33 +314,56 @@ const Pending = () => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    InputLabelProps={{ style: { fontSize: '14px' } }}
+                    InputLabelProps={{ style: { fontSize: '18px' } }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={4} container alignItems="center" justifyContent="flex-start" spacing={1}>
+                <Grid item>
                   <Button variant="contained" color="primary" size="small" style={{ marginRight: '8px' }}>
                     REFRESH
                   </Button>
+                </Grid>
+                <Grid item>
                   <Button variant="contained" color="default" size="small">
                     PRINT
                   </Button>
                 </Grid>
+              </Grid>
+
    
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
-              <FormControl component="fieldset" fullWidth>
-                <FormGroup row>
-                 <FormControlLabel
-                  label="coroperate"
-                  labelPlacement='start'
-                    control={<Checkbox checked={report.urgentwork}  name="coroperate" />}
-                   
-                  />
-                </FormGroup>
-              </FormControl>
-            </Grid> 
+                  <FormControl component="fieldset" fullWidth>
+                    <FormGroup row>
+                      <FormControlLabel
+                        label="Corporate"
+                        labelPlacement='start'
+                        control={
+                          <Checkbox
+                            checked={isChecked}
+                            onChange={handleCheckboxChange}
+                            name="corporate"
+                          />
+                        }
+                      />
+                      {isChecked && (
+                        <Grid item>
+                          <TextField
+                            label="Input"
+                            variant="outlined"
+                            size='small'
+                            InputLabelProps={{ style: { fontSize: '18px' } }}
+                            style={{ marginTop: '8px',marginLeft:'6px' }} // Adjust this value to move the input further down or up
+                          />
+                        </Grid>
+                      )}
+                    </FormGroup>
+                  </FormControl>
+                </Grid>
+              </Grid>
                 {/* Table */}
                 <Grid item xs={12}>
-                  <TableContainer style={{ maxHeight: 'calc(100vh - 400px)', overflowY: 'auto' }}>
+                  <TableContainer style={{ maxHeight: 'calc(100vh - 400px)', overflowY:'auto' }}>
                     <Table stickyHeader aria-label="sticky table">
                       <TableHead>
                         <TableRow>
@@ -348,7 +379,7 @@ const Pending = () => {
                       </TableHead>
                       <TableBody>
                         {rows.map((row) => (
-                          <TableRow key={row.id}>
+                           <TableRow key={row.id}> 
                             <TableCell sx={{ border: '1px solid #dddddd', fontSize: '12px', padding: '8px' }}>{row.id}</TableCell>
                             <TableCell sx={{ border: '1px solid #dddddd', fontSize: '12px', padding: '8px' }}>{row.col1}</TableCell>
                             <TableCell sx={{ border: '1px solid #dddddd', fontSize: '12px', padding: '8px' }}>{row.col2}</TableCell>
@@ -357,7 +388,7 @@ const Pending = () => {
                             <TableCell sx={{ border: '1px solid #dddddd', fontSize: '12px', padding: '8px' }}>{row.col5}</TableCell>
                             <TableCell sx={{ border: '1px solid #dddddd', fontSize: '12px', padding: '8px' }}>{row.col6}</TableCell>
                             <TableCell sx={{ border: '1px solid #dddddd', fontSize: '12px', padding: '8px' }}>{row.col7}</TableCell>
-                          </TableRow>
+                            </TableRow> 
                         ))}
                       </TableBody>
                     </Table>
@@ -368,7 +399,7 @@ const Pending = () => {
           </Grid>
         </Grid>
       </Container>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };
