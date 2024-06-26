@@ -6,6 +6,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Editinvoice from './components/Editinvoice'
 import Pending from './components/Pending'
 import PendingCollections from './components/PendingCollections';
+import PatientViews from './components/PatientViews';
+import Patient from './components/Patient';
 // import Header from './components/Header';
 // import MainComponent from './components/MainComponent'
 
@@ -34,7 +36,8 @@ function App() {
         <Router>
           {/* <Header/> */}
           <Routes>
-            <Route path="/" element={<Invoice />} />
+            <Route path='/' element={<Patient/>}/>
+            {/* <Route path="/" element={<PatientViews />} /> */}
             <Route path="/edit" element={<Editinvoice />} />
             <Route path="/pending" element={<Pending />} />
             <Route path='/pending' element={<PendingCollections/>}/>

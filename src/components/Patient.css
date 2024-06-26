@@ -1,0 +1,72 @@
+.patient-views {
+    padding: 20px;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .filters .filter-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filters label {
+    margin-right: 10px;
+  }
+  
+  .filters input[type="radio"],
+  .filters input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  .filters select,
+  .filters input[type="date"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  .patient-list {
+    margin-top: 20px;
+  }
+  
+  .patient-list table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .patient-list th,
+  .patient-list td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .patient-list th {
+    background-color: #111010;
+  }
+  
