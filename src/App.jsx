@@ -8,6 +8,7 @@ import Pending from './components/Pending'
 import PendingCollections from './components/PendingCollections';
 import PatientViews from './components/PatientViews';
 import Patient from './components/Patient';
+import Registration from './components/Registration';
 // import Header from './components/Header';
 // import MainComponent from './components/MainComponent'
 
@@ -36,7 +37,8 @@ function App() {
         <Router>
           {/* <Header/> */}
           <Routes>
-            <Route path='/' element={<Patient/>}/>
+            <Route path='/' element={<Registration/>}/>
+            {/* <Route path='/' element={<Patient/>}/> */}
             {/* <Route path="/" element={<PatientViews />} /> */}
             <Route path="/edit" element={<Editinvoice />} />
             <Route path="/pending" element={<Pending />} />
