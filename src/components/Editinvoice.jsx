@@ -94,10 +94,7 @@ const Editinvoice= () => {
     }
 }, [yearId]); // Run this effect whenever yrId changes
 
-// Function to update yrId
-// const updateYrId = (newValue) => {
-//     setYrId(newValue);
-// };
+
 
  useEffect(() => {
 
@@ -200,6 +197,7 @@ useEffect(() => {
       const invoiceData = response.data.invoiceDtls;
       setInvoiceData(invoiceData);
       // for refby field
+      if (invoiceData) {
       const refByValue = invoiceData.Inv_RefBy || '';
       setRefBy(refByValue);
       if (refByValue) {
@@ -283,7 +281,8 @@ useEffect(() => {
       setInvDate(invoiceData.Inv_Date || '');
       setInvTime(invoiceData.Inv_time || '');
       setInvSmplDate(invoiceData.Inv_SmplDate)
-    } catch (error) {
+    }
+   } catch (error) {
       setError(error.message);
     }
   };
@@ -564,6 +563,27 @@ const saveDataToAPI = () => {
       }
     };
     //function to 
+    // const handleRefByChange = (event, newValue) => {
+    //   if (newValue) {
+    //     const selectedRefBy = searchResultsRefBy.find(result => result.AhMst_pName === newValue);
+    //     if (selectedRefBy) {
+    //       setSelectedRefByKey(selectedRefBy.AhMst_Key);
+    //       setRefBy(newValue);
+    //       setInvData(prevState => ({
+    //         ...prevState,
+    //         Inv_DrId: selectedRefBy.AhMst_Key, 
+    //       }));
+    //     }
+    //   } else {
+    //     setSelectedRefByKey('');
+    //     setRefBy('');
+    //     setInvData(prevState => ({
+    //       ...prevState,
+    //       Inv_DrId: 0, 
+    //     }));
+    //   }
+    // };
+    
     const handleRefByChange = (event, newValue) => {
       if (newValue) {
         const selectedRefBy = searchResultsRefBy.find(result => result.AhMst_pName === newValue);
@@ -572,20 +592,25 @@ const saveDataToAPI = () => {
           setRefBy(newValue);
           setInvData(prevState => ({
             ...prevState,
-            Inv_DrId: selectedRefBy.AhMst_Key, 
+            Inv_DrId: selectedRefBy.AhMst_Key,
           }));
+          setOutDr('');
         }
       } else {
         setSelectedRefByKey('');
         setRefBy('');
         setInvData(prevState => ({
           ...prevState,
-          Inv_DrId: 0, 
+          Inv_DrId: 0,
         }));
       }
     };
-    
-    
+  
+    // Handler for changing Out Dr
+    const handleOutDrChange = (event) => {
+      setOutDr(event.target.value);
+      setRefBy(''); // Clear Ref By when Out Dr changes
+    };
    // Event handler for CollBy field changes
    const handleCollByChange = (event, newValue) => {
     if (newValue) {
@@ -677,37 +702,6 @@ const handleNewButtonClick = () => {
   return (
     <>
      <div style={{ backgroundColor: '#f0f0f0', minHeight: '100vh', padding: '20px',  }}>
-      {/* <Typography
-        variant="h5"
-        component="h1"
-        gutterBottom
-        sx={{
-          padding: '10px',
-          textAlign: 'center', // Center align the text
-        }}
-      >
-        Register Patient
-      </Typography> */}
-      {/* <div style={{ padding: '10px', textAlign: 'center' }}>
-        <TextField
-          name="search"
-          // label="Select Patient by Name, Phone, National ID, Manual Patient ID"
-          variant="outlined"
-          fullWidth
-          value={formData.search}
-          onChange={handleChange}
-          sx={{ mt: 1, mb: 2, width: '100%', maxWidth: '600px', margin: '0 auto' }} // Center the TextField
-          InputProps={{
-            style: { height: '40px' },
-            endAdornment: (
-              <InputAdornment position="end">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-          InputLabelProps={{ style: { fontSize: '14px', marginTop: '-3px' } }}
-        />
-      </div> */}
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={8} md={6} lg={4}>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '20px' }}>
@@ -727,7 +721,6 @@ const handleNewButtonClick = () => {
     <Container component="main" maxWidth="md" >
       <Paper elevation={3} style={{ padding: '16px', borderRadius: '15px' }}>
       
-        {/* <form onSubmit={handleSubmit}> */}
         <Grid container spacing={2}>
           
         <Grid item xs={12} sm={6}>
@@ -743,33 +736,6 @@ const handleNewButtonClick = () => {
                 style={{ marginBottom: '10px' }}
               />
             </Grid>
-            
-          {/* <Grid item xs={12} sm={6}>
-          <TextField
-          id="branchId"
-                label="Branch Id"
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={branchId}
-                onChange={(e) => setBranchId(e.target.value)}
-                InputLabelProps={{ style: { fontSize: '14px' } }}
-              />
-            </Grid>
-            
-          <Grid item xs={12} sm={6}>
-          <TextField
-                id="yearId"
-                label="Year Id"
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={yearId}
-                onChange={(e) => setYearId(e.target.value)}
-                InputLabelProps={{ style: { fontSize: '14px' } }}
-                style={{ marginBottom: '20px' }}
-              />
-            </Grid> */}
             <Grid item xs={12} sm={6}>
               <Button variant="contained" color="primary" onClick={fetchData}
               style={{
@@ -1018,7 +984,7 @@ const handleNewButtonClick = () => {
                 InputLabelProps={{ style: { fontSize: '14px' } }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
       <Autocomplete
         freeSolo
         options={searchResultsRefBy.map((result) => result ? result.AhMst_pName : '')}
@@ -1051,7 +1017,43 @@ const handleNewButtonClick = () => {
                 onChange={(e) => setOutDr(e.target.value)}
                 InputLabelProps={{ style: { fontSize: '14px' } }}
               />
-            </Grid>
+            </Grid> */}
+           <Grid item xs={12} sm={6}>
+      <Autocomplete
+        freeSolo
+        options={searchResultsRefBy.map((result) => result ? result.AhMst_pName : '')}
+        value={refBy}
+        onInputChange={(event, newValue) => handleSearchChange('RefBy', newValue, setSearchResultsRefBy, setErrorRefBy)}
+        onChange={handleRefByChange}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            id="refBy"
+            label="Ref By"
+            variant="outlined"
+            size="small"
+            fullWidth
+            error={!!errorRefBy}
+            // helperText={errorRefBy}
+            InputLabelProps={{ style: { fontSize: '14px' } }}
+            disabled={!!outDr} 
+          />
+        )}
+      />
+    </Grid>  
+      <Grid item xs={12} sm={6}>
+        <TextField
+          id="outDr"
+          label="Out Dr"
+          variant="outlined"
+          size="small"
+          fullWidth
+          value={outDr}
+          onChange={handleOutDrChange}
+          disabled={!!refBy} // Disable if Ref By has a value
+          InputLabelProps={{ style: { fontSize: '16px' } }}
+        />
+      </Grid>
             <Grid item xs={12} sm={6}>
             <TextField
                 id="passport"
