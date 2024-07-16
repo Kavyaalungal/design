@@ -14,6 +14,7 @@ import Component from './components/Component';
 import Cancelinvoice from './components/Cancelinvoice';
 import Cancel from './components/Cancel';
 import Bill from './components/Bill';
+import PatientBill from './PatientBill';
 // import Header from './components/Header';
 // import MainComponent from './components/MainComponent'
 
@@ -46,7 +47,8 @@ function App() {
             {/* <Route path='/' element={<Patient/>}/> */}
             {/* <Route path="/" element={<PatientViews />} /> */}
             {/* <Route path="/" element={<Editinvoice />} /> */}
-            <Route path='/' element={<Bill/>}/>
+            {/* <Route path='/' element={<Bill/>}/> */}
+            <Route path='/' element={<PatientBill/>}/>
             {/* <Route path='/' element={<Cancelinvoice/>}/> */}
             {/* <Route path='/' element={<Cancel/>}/> */}
             {/* <Route path='/'  element={<Component/>}/> */}
